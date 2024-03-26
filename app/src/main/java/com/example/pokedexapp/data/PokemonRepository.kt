@@ -9,8 +9,8 @@ import com.example.pokedexapp.network.PokemonApiService
  */
 interface PokemonRepository {
     suspend fun getPokemonDetailsRepoFun(name: String) : PokemonDetails
-    suspend fun getPokemonDetailsRepoFunWithPagination(name: String) : PokemonDetails
-    suspend fun getPokemonListingRepoFun(offset: Int, limit: Int) : PokemonListing
+    suspend fun getPokemonListingRepoFun() : PokemonListing
+    suspend fun getPokemonListingRepoFunWithPagination(offset: Int, limit: Int) : PokemonListing
 
 
 }
@@ -18,8 +18,8 @@ class NetworkPokemonRepository(
     private val apiService: PokemonApiService
 ) : PokemonRepository {
     override suspend fun getPokemonDetailsRepoFun(name: String): PokemonDetails = apiService.getPokemonDetails(name)
-    override suspend fun getPokemonDetailsRepoFunWithPagination(name: String): PokemonDetails = apiService.getPokemonDetailsWithPagination(name)
-    override suspend fun getPokemonListingRepoFun(offset: Int, limit: Int): PokemonListing = apiService.getPokemonListing(offset, limit)
+    override suspend fun getPokemonListingRepoFun(): PokemonListing = apiService.getPokemonListing()
+    override suspend fun getPokemonListingRepoFunWithPagination(offset: Int, limit: Int): PokemonListing = apiService.getPokemonListingWithPagination(offset, limit)
 
 
 }

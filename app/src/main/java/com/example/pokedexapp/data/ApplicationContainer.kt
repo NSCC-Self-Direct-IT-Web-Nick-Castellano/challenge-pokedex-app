@@ -29,6 +29,7 @@ class DefaultApplicationContainer : ApplicationContainer {
         retrofit.create(PokemonApiService::class.java)
     }
 
+
     override val pokemonRepository: PokemonRepository by lazy {
         NetworkPokemonRepository(retrofitService)
     }

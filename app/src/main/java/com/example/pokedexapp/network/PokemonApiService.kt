@@ -13,11 +13,11 @@ interface PokemonApiService {
     suspend fun getPokemonDetails(@Path("name") name: String): PokemonDetails
 
     // for getting pokemons with pagination
-    @GET("pokemon/{name}")
-    suspend fun getPokemonDetailsWithPagination(@Path("name") name: String): PokemonDetails
+    @GET("pokemon")
+    suspend fun getPokemonListing(): PokemonListing
 
     @GET("pokemon/?offset={offset}&limit={limit}")
-    suspend fun getPokemonListing(@Path("offset") offset: Int, @Path("limit") limit: Int): PokemonListing
+    suspend fun getPokemonListingWithPagination(@Path("offset") offset: Int, @Path("limit") limit: Int): PokemonListing
 }
 
 //

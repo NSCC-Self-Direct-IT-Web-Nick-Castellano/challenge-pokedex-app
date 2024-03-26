@@ -20,6 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.pokedexapp.R
+import com.example.pokedexapp.ui.screens.HomeScreen
+import com.example.pokedexapp.ui.screens.PokedexViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @ExperimentalMaterial3Api
@@ -37,7 +39,15 @@ fun AppScaffold() {
                 .padding(vertical = 8.dp)
         ) {
 
-            Text(text = "Hello World")
+            // add viewmodel
+            val pokedexViewModel : PokedexViewModel = viewModel(
+                factory = PokedexViewModel.Factory
+            )
+
+            HomeScreen(
+                pokemonUiState = pokedexViewModel.pokemonUiState,
+                contentPadding = it
+            )
         }
     }
 }
