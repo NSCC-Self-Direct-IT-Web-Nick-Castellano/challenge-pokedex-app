@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -61,6 +62,7 @@ fun PokemonListScreen(
                 .background(MaterialTheme.colorScheme.outlineVariant)
                 .padding(8.dp, 8.dp)
                 .fillMaxWidth()
+                .weight(0.8F)
         ) {
 
 
@@ -77,7 +79,7 @@ fun PokemonListScreen(
                             Text(
                                 text = StringMethods.capitalizeString(item.name),
                                 color = Color.Black,
-                                fontSize = 16.sp,
+                                fontSize = 18.sp,
                                 modifier = Modifier
                                     .fillMaxWidth()
                             )

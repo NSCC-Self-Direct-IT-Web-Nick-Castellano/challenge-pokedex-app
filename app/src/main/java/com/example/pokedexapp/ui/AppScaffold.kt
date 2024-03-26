@@ -34,9 +34,17 @@ import com.example.pokedexapp.ui.screens.PokedexViewModel
 fun AppScaffold() {
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
 
+    // add viewmodel
+    val pokedexViewModel : PokedexViewModel = viewModel(
+        factory = PokedexViewModel.Factory
+    )
+
     Scaffold (
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = { PokedexAppBar(scrollBehavior = scrollBehavior) }
+        topBar = { PokedexAppBar(
+            scrollBehavior = scrollBehavior,
+            onGoBackInHistory = { pokedexViewModel.goBackToUiHistory() }
+        ) }
     ) {
         Surface (
             modifier = Modifier
@@ -44,10 +52,7 @@ fun AppScaffold() {
                 .padding()
         ) {
 
-            // add viewmodel
-            val pokedexViewModel : PokedexViewModel = viewModel(
-                factory = PokedexViewModel.Factory
-            )
+
 
             HomeScreen(
                 pokedexViewModel = pokedexViewModel,
@@ -61,6 +66,7 @@ fun AppScaffold() {
 @Composable
 fun PokedexAppBar(
     scrollBehavior: TopAppBarScrollBehavior,
+    onGoBackInHistory: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     CenterAlignedTopAppBar(
@@ -73,7 +79,7 @@ fun PokedexAppBar(
             )
         },
         navigationIcon = {
-             IconButton(onClick = { /*TODO*/ }) {
+             IconButton(onClick = onGoBackInHistory) {
                  Icon(
                      imageVector = Icons.Filled.ArrowBack,
                      contentDescription = "Localized description",
