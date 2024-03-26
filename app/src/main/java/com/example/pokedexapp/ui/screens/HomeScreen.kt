@@ -34,12 +34,14 @@ fun HomeScreen(
             PokemonListScreen(
                 pokemonListingData =
                 (pokedexViewModel.pokemonUiState as PokemonUiState.PokemonListingSuccess).pokemonListing,
-                handleGetDetailsFunction = {}
+                handleGetDetailsFunction = { name -> pokedexViewModel.getPokemonDetails(name) }
             )
         }
 
-        is PokemonUiState.pokemonDetailsSuccess -> {
-            Text(text = "Pokemons Details Retrieved Successfully")
+        is PokemonUiState.PokemonDetailsSuccess -> {
+            PokemonDetailScreen(
+                pokemonDetails = (pokedexViewModel.pokemonUiState as PokemonUiState.PokemonDetailsSuccess).pokemonDetails
+            )
         }
     }
 }
@@ -55,7 +57,7 @@ fun ErrorScreen(
     retryAction: () -> Unit
 ) {
     Column (
-        verticalArrangement = Arrangement.SpaceEvenly,
+//        verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modififer
     ) {

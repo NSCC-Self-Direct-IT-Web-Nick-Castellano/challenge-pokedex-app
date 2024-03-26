@@ -36,7 +36,7 @@ fun AppScaffold() {
         Surface (
             modifier = Modifier
                 .fillMaxSize()
-                .padding(vertical = 8.dp)
+                .padding()
         ) {
 
             // add viewmodel

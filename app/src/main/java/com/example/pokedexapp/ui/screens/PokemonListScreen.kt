@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.pokedexapp.data.PokemonRepository
 import com.example.pokedexapp.model.PokemonListing
 import com.example.pokedexapp.model.PokemonListingItem
 import com.example.pokedexapp.ui.theme.PokedexAppTheme
@@ -66,7 +67,7 @@ fun PokemonListScreen(
                         ClickableText(
                             text = AnnotatedString(item.name),
                             modifier = Modifier.padding(8.dp, 12.dp),
-                            onClick = {}
+                            onClick = { handleGetDetailsFunction(item.name) }
                         )
                     }
                 }

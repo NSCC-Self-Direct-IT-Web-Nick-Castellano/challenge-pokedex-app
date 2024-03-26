@@ -8,12 +8,12 @@ data class PokemonDetails(
     val id: Int,
     val name: String,
     @SerialName("base_experience")
-    val baseExperience: String,
+    val baseExperience: Int,
     @SerialName("is_default")
-    val isDefault: Int,
+    val isDefault: Boolean,
     val order: Int,
     val weight: Int,
-    val height: String,
+    val height: Int,
     val types: List<PokemonType>,
     val sprites: Sprites,
 )

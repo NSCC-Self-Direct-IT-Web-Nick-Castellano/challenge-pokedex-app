@@ -19,7 +19,7 @@ import java.io.IOException
 
 sealed interface PokemonUiState {
     data class PokemonListingSuccess(val pokemonListing: PokemonListing) : PokemonUiState
-    data class pokemonDetailsSuccess(val pokemonDetails: PokemonDetails) : PokemonUiState
+    data class PokemonDetailsSuccess(val pokemonDetails: PokemonDetails) : PokemonUiState
 
 
     // the loading and error ui states
@@ -47,6 +47,22 @@ class PokedexViewModel (
             pokemonUiState = try {
                 PokemonUiState.PokemonListingSuccess(
                     pokemonRepository.getPokemonListingRepoFun()
+                )
+            } catch (e : IOException) {
+                PokemonUiState.Error
+            } catch (e : HttpException) {
+                PokemonUiState.Error
+            }
+        }
+    }
+
+    fun getPokemonDetails(name: String) {
+        viewModelScope.launch {
+            pokemonUiState = PokemonUiState.Loading
+
+            pokemonUiState = try {
+                PokemonUiState.PokemonDetailsSuccess(
+                    pokemonRepository.getPokemonDetailsRepoFun(name = name)
                 )
             } catch (e : IOException) {
                 PokemonUiState.Error
