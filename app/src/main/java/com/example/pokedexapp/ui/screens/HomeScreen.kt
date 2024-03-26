@@ -15,13 +15,13 @@ import com.example.pokedexapp.R
 
 @Composable
 fun HomeScreen(
-    pokemonUiState: PokemonUiState,
+    pokedexViewModel: PokedexViewModel,
     modififer : Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 //    retryAction: () -> Unit
 ) {
-//    Text(text = "Hello Pokedex!"
-    when (pokemonUiState) {
+
+    when (pokedexViewModel.pokemonUiState) {
         is PokemonUiState.Loading -> LoadingScreen(
             modififer = modififer.fillMaxSize()
         )
@@ -32,7 +32,9 @@ fun HomeScreen(
 
         is PokemonUiState.PokemonListingSuccess -> {
             PokemonListScreen(
-                pokemonListingData = pokemonUiState.pokemonListing
+                pokemonListingData =
+                (pokedexViewModel.pokemonUiState as PokemonUiState.PokemonListingSuccess).pokemonListing,
+                handleGetDetailsFunction = {}
             )
         }
 

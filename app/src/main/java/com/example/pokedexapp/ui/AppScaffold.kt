@@ -45,7 +45,7 @@ fun AppScaffold() {
             )
 
             HomeScreen(
-                pokemonUiState = pokedexViewModel.pokemonUiState,
+                pokedexViewModel = pokedexViewModel,
                 contentPadding = it
             )
         }

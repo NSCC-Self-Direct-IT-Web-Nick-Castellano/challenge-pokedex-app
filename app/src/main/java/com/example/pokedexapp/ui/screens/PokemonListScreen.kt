@@ -31,7 +31,8 @@ import com.example.pokedexapp.ui.theme.PokedexAppTheme
 @Composable
 fun PokemonListScreen(
     modifier: Modifier = Modifier,
-    pokemonListingData: PokemonListing
+    pokemonListingData: PokemonListing,
+    handleGetDetailsFunction: (name: String) -> Unit
 ) {
     Column (
         modifier = modifier
@@ -127,6 +128,9 @@ fun PokemonListScreenPreview(){
             results = listOfPokemonItems
         )
 
-        PokemonListScreen(pokemonListingData = pokemonListing)
+        PokemonListScreen(
+            pokemonListingData = pokemonListing,
+            handleGetDetailsFunction = {}
+        )
     }
 }
