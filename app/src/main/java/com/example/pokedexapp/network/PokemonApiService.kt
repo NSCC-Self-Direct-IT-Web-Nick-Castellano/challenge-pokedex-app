@@ -12,18 +12,22 @@ interface PokemonApiService {
     @GET("pokemon/{name}")
     suspend fun getPokemonDetails(@Path("name") name: String): PokemonDetails
 
-    @GET("pokemon")
-    suspend fun getPokemonListing(): PokemonListing
+    // for getting pokemons with pagination
+    @GET("pokemon/{name}")
+    suspend fun getPokemonDetailsWithPagination(@Path("name") name: String): PokemonDetails
+
+    @GET("pokemon/?offset={offset}&limit={limit}")
+    suspend fun getPokemonListing(@Path("offset") offset: Int, @Path("limit") limit: Int): PokemonListing
 }
 
-
-fun createPokemonApiService(): PokemonApiService {
-    val BASE_URL = "https://pokeapi.co/api/v2/"
-
-    val retrofit = Retrofit.Builder()
-        .addConverterFactory(kotlinx.serialization.json.Json.asConverterFactory("application/json".toMediaType()))
-        .baseUrl(BASE_URL)
-        .build()
-
-    return retrofit.create(PokemonApiService::class.java)
-}
+//
+//fun createPokemonApiService(): PokemonApiService {
+//    val BASE_URL = "https://pokeapi.co/api/v2/"
+//
+//    val retrofit = Retrofit.Builder()
+//        .addConverterFactory(kotlinx.serialization.json.Json.asConverterFactory("application/json".toMediaType()))
+//        .baseUrl(BASE_URL)
+//        .build()
+//
+//    return retrofit.create(PokemonApiService::class.java)
+//}

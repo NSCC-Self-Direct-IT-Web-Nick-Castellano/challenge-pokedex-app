@@ -11,7 +11,7 @@ data class PokemonListingItem(
 @Serializable
 data class PokemonListing(
     val count: Int,
-    val next: String,
-    val previous: String,
+    val next: String? = null,
+    val previous: String? = null,
     val results: List<PokemonListingItem>
 )
