@@ -31,7 +31,9 @@ fun HomeScreen(
         )
 
         is PokemonUiState.PokemonListingSuccess -> {
-            Text(text = "Pokemon Listings Retieved Successfully")
+            PokemonListScreen(
+                pokemonListingData = pokemonUiState.pokemonListing
+            )
         }
 
         is PokemonUiState.pokemonDetailsSuccess -> {
