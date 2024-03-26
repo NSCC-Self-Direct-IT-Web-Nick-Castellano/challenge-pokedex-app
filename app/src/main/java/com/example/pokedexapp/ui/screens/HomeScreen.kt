@@ -34,7 +34,18 @@ fun HomeScreen(
             PokemonListScreen(
                 pokemonListingData =
                 (pokedexViewModel.pokemonUiState as PokemonUiState.PokemonListingSuccess).pokemonListing,
-                handleGetDetailsFunction = { name -> pokedexViewModel.getPokemonDetails(name) }
+                handleGetDetailsFunction = { name -> pokedexViewModel.getPokemonDetails(name) },
+                handleNextPageFunction = { nextPage -> pokedexViewModel.nextListingPage(nextPage)}
+            )
+        }
+
+        is PokemonUiState.PokemonListingWithPaginationSuccess -> {
+            PokemonListScreen(
+                pokemonListingData =
+                (pokedexViewModel.pokemonUiState as PokemonUiState.PokemonListingWithPaginationSuccess).pokemonListing,
+                currentPage = pokedexViewModel.currentPage,
+                handleGetDetailsFunction = { name -> pokedexViewModel.getPokemonDetails(name) },
+                handleNextPageFunction = { nextPage -> pokedexViewModel.nextListingPage(nextPage)}
             )
         }
 

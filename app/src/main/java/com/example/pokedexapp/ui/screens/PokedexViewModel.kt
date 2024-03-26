@@ -23,6 +23,7 @@ import java.io.IOException
 sealed interface PokemonUiState {
     data class PokemonListingSuccess(val pokemonListing: PokemonListing) : PokemonUiState
     data class PokemonDetailsSuccess(val pokemonDetails: PokemonDetails) : PokemonUiState
+    data class PokemonListingWithPaginationSuccess(val pokemonListing: PokemonListing) : PokemonUiState
 
 
     // the loading and error ui states
@@ -36,6 +37,15 @@ class PokedexViewModel (
 
     // initiate the ui state
     var pokemonUiState : PokemonUiState by mutableStateOf(PokemonUiState.Loading)
+        private set
+
+//    // limits and offset with pagination
+//    var offset : Int by mutableStateOf(0)
+//        private set
+    var limit : Int by mutableStateOf(20)
+        private set
+
+    var currentPage : Int by mutableStateOf(20)
         private set
 
     // the ui state history
@@ -66,7 +76,33 @@ class PokedexViewModel (
         }
     }
 
+    fun nextListingPage(nextPage: Int) {
+        viewModelScope.launch {
+            if (pokemonUiState != PokemonUiState.Loading && pokemonUiState != PokemonUiState.Error) {
+                addToUiStateHistory(pokemonUiState)
+            }
 
+            // check if can navigate to next listing page
+            pokemonUiState = PokemonUiState.Loading
+//            val limit = 20
+            val offset = maxOf(0, limit * (nextPage-1))
+
+            // change the current page to next page
+            currentPage = nextPage
+
+            pokemonUiState = try {
+                PokemonUiState.PokemonListingWithPaginationSuccess(
+                    pokemonRepository.getPokemonListingRepoFunWithPagination(offset = offset, limit = limit)
+                )
+
+            } catch (e : IOException) {
+                PokemonUiState.Error
+            } catch (e : HttpException) {
+                PokemonUiState.Error
+            }
+
+        }
+    }
 
     fun getPokemonListing() {
         viewModelScope.launch {

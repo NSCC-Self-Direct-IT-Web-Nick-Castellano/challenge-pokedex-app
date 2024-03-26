@@ -7,6 +7,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface PokemonApiService {
     @GET("pokemon/{name}")
@@ -15,19 +16,9 @@ interface PokemonApiService {
     // for getting pokemons with pagination
     @GET("pokemon")
     suspend fun getPokemonListing(): PokemonListing
-
-    @GET("pokemon/?offset={offset}&limit={limit}")
-    suspend fun getPokemonListingWithPagination(@Path("offset") offset: Int, @Path("limit") limit: Int): PokemonListing
+    @GET("pokemon")
+    suspend fun getPokemonListingWithPagination(
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int
+    ): PokemonListing
 }
-
-//
-//fun createPokemonApiService(): PokemonApiService {
-//    val BASE_URL = "https://pokeapi.co/api/v2/"
-//
-//    val retrofit = Retrofit.Builder()
-//        .addConverterFactory(kotlinx.serialization.json.Json.asConverterFactory("application/json".toMediaType()))
-//        .baseUrl(BASE_URL)
-//        .build()
-//
-//    return retrofit.create(PokemonApiService::class.java)
-//}

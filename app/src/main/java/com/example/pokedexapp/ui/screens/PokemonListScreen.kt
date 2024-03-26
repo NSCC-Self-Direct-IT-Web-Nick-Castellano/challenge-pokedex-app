@@ -1,5 +1,6 @@
 package com.example.pokedexapp.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -40,7 +41,9 @@ import com.example.pokedexapp.utils.StringMethods
 fun PokemonListScreen(
     modifier: Modifier = Modifier,
     pokemonListingData: PokemonListing,
-    handleGetDetailsFunction: (name: String) -> Unit
+    currentPage: Int = 1,
+    handleGetDetailsFunction: (name: String) -> Unit,
+    handleNextPageFunction: (nextPage: Int) -> Unit,
 ) {
     Column (
         modifier = modifier
@@ -101,10 +104,22 @@ fun PokemonListScreen(
             val buttonModifier = Modifier
                 .clip(CircleShape)
                 .padding(8.dp, 0.dp)
+
             val buttonElevation = null
-            val buttonColors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.surface)
+
+            val buttonColors = ButtonDefaults.buttonColors(
+                MaterialTheme.colorScheme.surface,
+                disabledContainerColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.7F),
+                disabledContentColor = Color.White.copy(alpha = 0.7F)
+            )
+
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    if (pokemonListingData.previous != null) {
+                        handleNextPageFunction(currentPage - 1)
+                    }
+                },
+                enabled = pokemonListingData.previous != null,
                 modifier = buttonModifier,
                 elevation = buttonElevation,
                 colors = buttonColors
@@ -112,7 +127,13 @@ fun PokemonListScreen(
                 Text(text = "Previous")
             }
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    if (pokemonListingData.next != null) {
+
+                        handleNextPageFunction(currentPage + 1)
+                    }
+                },
+                enabled = pokemonListingData.next != null,
                 modifier = buttonModifier,
                 elevation = buttonElevation,
                 colors = buttonColors
@@ -151,7 +172,8 @@ fun PokemonListScreenPreview(){
 
         PokemonListScreen(
             pokemonListingData = pokemonListing,
-            handleGetDetailsFunction = {}
+            handleGetDetailsFunction = {},
+            handleNextPageFunction = {}
         )
     }
 }
